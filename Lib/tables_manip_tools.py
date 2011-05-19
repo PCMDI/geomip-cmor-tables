@@ -11,9 +11,10 @@ class TableBadMD5(Exception):
     pass
 
 class CMORTables:
-    def __init__(self,url,name):
+    def __init__(self,name,prefix,url="uv-cdat.llnl.gov"):
         self.repo_url=url
         self.repo_name=name
+        self.repo_prefix=prefix
         self.H=httplib.HTTPConnection(self.repo_url)
 
     def splitTableString(self,str):
@@ -32,13 +33,13 @@ class CMORTables:
 
     def fetchLatestTable(self,table):
         table,data,md5 = self.preprocess(table)
-        self.H.request("GET","/gitweb/?p=%s.git;a=blob_plain;f=Tables/CMIP5_%s;hb=HEAD" % (self.repo_name,table))
+        self.H.request("GET","/gitweb/?p=%s.git;a=blob_plain;f=Tables/%s_%s;hb=HEAD" % (self.repo_name,self.repo_prefix,table))
         r = self.H.getresponse()
         return r.read()
 
 
     def fetchATable(self,table,commit):
-        self.H.request("GET","/gitweb/?p=%s.git;a=blob_plain;f=Tables/CMIP5_%s;h=%s" % (self.repo_name,table,commit))
+        self.H.request("GET","/gitweb/?p=%s.git;a=blob_plain;f=Tables/%s_%s;h=%s" % (self.repo_name,self.repo_prefix,table,commit))
         r=self.H.getresponse()
         return r.read()
 
@@ -46,7 +47,7 @@ class CMORTables:
         table,date,md5 = self.preprocess(table,date)
         self.checkTable(table,date)
         # Ok now fetch the history
-        self.H.request("GET","/gitweb/?p=%s.git;a=history;f=Tables/CMIP5_%s;hb=HEAD" % (self.repo_name,table))
+        self.H.request("GET","/gitweb/?p=%s.git;a=history;f=Tables/%s_%s;hb=HEAD" % (self.repo_name,self.repo_prefix,table))
         r = self.H.getresponse().read()
         for l in r.split("\n"):
             i= l.find(";hp=")
@@ -64,7 +65,7 @@ class CMORTables:
         table,date,md5 = self.preprocess(table,date,md5)
         self.H.request("GET","/gitweb/?p=%s.git;a=blob_plain;f=Tables/md5s;hb=HEAD" % self.repo_name)
         r = self.H.getresponse()
-        md5Table = eval( r.read())["CMIP5"]
+        md5Table = eval( r.read())[self.repo_prefix]
         table = md5Table.get(table,None)
         if table is None:
             raise TableBadName("Invalid Table name: %s" % table)
@@ -78,7 +79,8 @@ class CMORTables:
 if __name__=="__main__":
     repo_name = "cmip5-cmor-tables"
     repo_url = "uv-cdat.llnl.gov"
-    Tables = CMORTables(repo_url,repo_name)
+    repo_prefix="CMIP5"
+    Tables = CMORTables(repo_name,repo_prefix,repo_url)
     t = Tables.fetchTable("Oclim","12 May 2010")
     print t
 
