@@ -6,7 +6,7 @@ frequency: 6hr
 cmor_version: 2.5.0 ! minimum version of CMOR that can read this table
 cf_version:   1.4         ! version of CF that output conforms to
 project_id:   GeoMIP  ! project id
-table_date:   3 February 2014 ! date this table was constructed
+table_date:   5 February 2014 ! date this table was constructed
 
 missing_value: 1.e20      ! value used to indicate a missing value
                           !   in arrays output by netCDF as 32-bit IEEE 
@@ -31,6 +31,10 @@ expt_id_ok: 'RCP4.5 2020-2069 and 5 Tg SO2 injection per yr' 'G4'
 expt_id_ok: 'G1ocean-albedo' 'G1oceanAlbedo'
 expt_id_ok: 'G4cdnc' 'G4cdnc'
 expt_id_ok: 'G4sea-salt' 'G4seaSalt'
+expt_id_ok: 'G1ocean-albedo fixed SST' 'sstClimG1oceanAlbedo'
+expt_id_ok: 'G4cdnc fixed SST' 'sst2020G4cdnc'
+expt_id_ok: 'G4sea-salt fixed SST' 'sst2020G4seaSalt'
+expt_id_ok: 'RCP4.5 fixed SST' 'sst2020rcp45'
 
 
 approx_interval:  0.250000     ! approximate spacing between successive time
