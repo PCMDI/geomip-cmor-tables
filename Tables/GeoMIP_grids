@@ -4,7 +4,7 @@ table_id: Table grids
 cmor_version: 2.0         ! version of CMOR that can read this table
 cf_version:   1.4         ! version of CF that output conforms to
 project_id:   GeoMIP       ! project id
-table_date:   5 February 2014 ! date this table was constructed
+table_date:   17 February 2014 ! date this table was constructed
 
 missing_value: 1.e20      ! value used to indicate a missing value
                           !   in arrays output by netCDF as 32-bit IEEE 
@@ -33,6 +33,7 @@ expt_id_ok: 'G1ocean-albedo fixed SST' 'sstClimG1oceanAlbedo'
 expt_id_ok: 'G4cdnc fixed SST' 'sst2020G4cdnc'
 expt_id_ok: 'G4sea-salt fixed SST' 'sst2020G4seaSalt'
 expt_id_ok: 'RCP4.5 fixed SST' 'sst2020rcp45'
+expt_id_ok: 'control SST climatology' 'sstClim'
 
 
 !
